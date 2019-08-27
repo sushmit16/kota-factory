@@ -1,0 +1,51 @@
+// Queries of day 4 
+ create table member(
+ memID int auto_increment primary key,
+ fname varchar(20) not null,
+ mname varchar(20),
+lname varchar(20) not null,
+mem_DOj date,email varchar(30) unique,
+phone char(10),member_type enum ('regular','silver','gold','platinum')
+);
+
+
+create table book (
+book_id int auto_increment primary key ,
+bname varchar(50) not null,
+price decimal (6,2),
+fname varchar(20)
+);
+
+create table booktranc(
+trid int auto_increment primary key ,
+trdate datetime,
+bookid int, constraint booktranc_bookid_fk foreign key(bookid) references book(book_id),
+mid int,constraint booktranc_mid_fk foreign key(mId) references member(memId)
+);
+
+alter table book
+drop fname;
+
+alter table book add author varchar(30) not null;
+
+desc book;
+
+insert into book values(NULL,'My SQl',550,'sanjay');
+
+insert into member(fname,mname,lname,mem_DOj, email,phone,member_type)
+values
+('tom','dic','harry',now(),'tomdic@harry.com',6598745872,'Gold'),
+('ashely',null,'tisdale',now(),'todic@gamil.com',6598745772,'Platinum'),
+('hillary','duff','hari',now(),NULL,7598745476,'Silver'),
+('tomi','don','herry',now(),NULL,6598745682,'Gold')
+;
+
+insert into booktranc(trdate,bookid,mid)
+values(now(),1,2),(now(),2,4);
+
+create table booktranc(
+trid int auto_increment primary key ,
+trdate datetime,
+bookid int references book(book_id),
+mid int references member(memID)
+);
