@@ -287,6 +287,9 @@ ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that 
 mysql> select * from customers,
     -> where rating=100;
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where rating=100' at line 2
+
+QN:-2
+
 mysql> select * from customers
     -> where rating=100;
 +------+---------+--------+--------+------+
@@ -297,6 +300,8 @@ mysql> select * from customers
 | 2009 | pereira | rome   |    100 | 1004 |
 +------+---------+--------+--------+------+
 3 rows in set (0.00 sec)
+
+QN:-3
 
 mysql> select * from customers
     -> where city is NULL;
@@ -311,6 +316,27 @@ mysql> select * from orders
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by cnum desc' at line 2
 mysql> where order by cnum desc;
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where order by cnum desc' at line 1
+ 
+QN:-4
+
+mysql> SELECT S.SNUM,S.SNAME, MAX(O.AMT),O.ODATE FROM SALESPEOPLE S INNER JOIN ORDERS O WHERE O.SNUM=S.SNUM
+    -> GROUP BY ODATE,O.SNUM;
++------+---------+------------+------------+
+| SNUM | SNAME   | MAX(O.AMT) | ODATE      |
++------+---------+------------+------------+
+| 1001 | peel    |     767.19 | 1996-03-10 |
+| 1002 | serres  |    5160.45 | 1996-03-10 |
+| 1004 | motika  |    1900.10 | 1996-03-10 |
+| 1007 | rifkin  |    1098.16 | 1996-03-10 |
+| 1003 | axelrod |    1713.23 | 1996-04-10 |
+| 1001 | peel    |    4723.00 | 1996-05-10 |
+| 1001 | peel    |    9891.88 | 1996-06-10 |
+| 1002 | serres  |    1309.95 | 1996-06-10 |
++------+---------+------------+------------+
+8 rows in set (0.00 sec)
+
+QN:-5
+
 mysql> select * from orders
     -> order by cnum desc;
 +------+---------+------------+------+------+
@@ -369,6 +395,9 @@ mysql> select snum,sname
     -> from salespeople  s inner join orders o
     -> on s.snum = o.snum;
 ERROR 1052 (23000): Column 'snum' in field list is ambiguous
+
+QN:-6
+
 mysql> select s.snum,s.sname
     -> from salespeople  s inner join orders o
     -> on s.snum = o.snum;
@@ -471,6 +500,8 @@ mysql> select c.cname
     -> group by o.cnum;
 Empty set (0.00 sec)
 
+QN:-7
+
 mysql> select c.cname
     -> from  customers c inner join orders o
     -> on c.cnum=o.cnum
@@ -534,6 +565,9 @@ mysql> select s.snum,s.sname
 ERROR 1630 (42000): FUNCTION ad1.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
 mysql>
 mysql>
+
+QN:-8
+
 mysql> select s.snum,s.sname
     -> from salespeople s inner join customers c
     -> on s.snum=c.snum
